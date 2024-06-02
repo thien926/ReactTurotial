@@ -1,0 +1,130 @@
+1. Lỗi
+lỗi "PS D:\projects\ReactTurotial\react-form-builder-app> npm install react-bootstrap-slider
+npm error code ERESOLVE
+npm error ERESOLVE unable to resolve dependency tree
+npm error
+npm error While resolving: react-form-builder-app@0.1.0
+npm error Found: bootstrap@5.3.3
+npm error node_modules/bootstrap
+npm error   bootstrap@"^5.3.3" from the root project
+npm error
+npm error Could not resolve dependency:
+npm error peer bootstrap@"^4.5.0" from react-bootstrap-slider@3.0.0
+npm error node_modules/react-bootstrap-slider
+npm error   react-bootstrap-slider@"*" from the root project
+npm error
+npm error Fix the upstream dependency conflict, or retry
+npm error this command with --force or --legacy-peer-deps
+npm error to accept an incorrect (and potentially broken) dependency resolution.
+npm error
+npm error
+npm error For a full report see:
+npm error C:\Users\LENOVO\AppData\Local\npm-cache\_logs\2024-06-02T19_40_03_970Z-eresolve-report.txt
+
+npm error A complete log of this run can be found in: C:\Users\LENOVO\AppData\Local\npm-cache\_logs\2024-06-02T19_40_03_970Z-debug-0.log  "
+
+- Nguyen nhân : react-bootstrap-slider@3.0.0 yêu cầu bootstrap@^4.5.0, trong khi dự án của bạn đang sử dụng bootstrap@5.3.3
+- Giải pháp
+  + Hạ cấp Bootstrap
+  + Tìm gói thay thế
+  + Sử dụng tùy chọn --force hoặc --legacy-peer-deps
+
+2 Lỗi
+PS D:\projects\ReactTurotial\react-form-builder-app> npm install react-textarea-autosize
+npm error code ERESOLVE
+npm error ERESOLVE could not resolve
+npm error
+npm error While resolving: react-bootstrap-slider@3.0.0
+npm error Found: bootstrap@5.3.3
+npm error node_modules/bootstrap
+npm error   bootstrap@"^5.3.3" from the root project
+npm error
+npm error Could not resolve dependency:
+npm error peer bootstrap@"^4.5.0" from react-bootstrap-slider@3.0.0
+npm error node_modules/react-bootstrap-slider
+npm error   react-bootstrap-slider@"^3.0.0" from the root project
+npm error
+npm error Conflicting peer dependency: bootstrap@4.6.2
+npm error node_modules/bootstrap
+npm error   peer bootstrap@"^4.5.0" from react-bootstrap-slider@3.0.0
+npm error   node_modules/react-bootstrap-slider
+npm error     react-bootstrap-slider@"^3.0.0" from the root project
+npm error
+npm error Fix the upstream dependency conflict, or retry
+npm error this command with --force or --legacy-peer-deps
+npm error to accept an incorrect (and potentially broken) dependency resolution.
+npm error
+npm error
+npm error For a full report see:
+npm error C:\Users\LENOVO\AppData\Local\npm-cache\_logs\2024-06-02T19_45_11_632Z-eresolve-report.txt
+
+npm error A complete log of this run can be found in: C:\Users\LENOVO\AppData\Local\npm-cache\_logs\2024-06-02T19_45_11_632Z-debug-0.log 
+
+- Nguyen nhân : tương tự trên
+
+3. Lỗi
+PS D:\projects\ReactTurotial\react-form-builder-app> npm install react-datepicker           
+npm error code ERESOLVE
+npm error ERESOLVE could not resolve
+npm error
+npm error While resolving: react-bootstrap-slider@3.0.0
+npm error Found: bootstrap@5.3.3
+npm error node_modules/bootstrap
+npm error   bootstrap@"^5.3.3" from the root project
+npm error
+npm error Could not resolve dependency:
+npm error peer bootstrap@"^4.5.0" from react-bootstrap-slider@3.0.0
+npm error node_modules/react-bootstrap-slider
+npm error   react-bootstrap-slider@"^3.0.0" from the root project
+npm error
+npm error Conflicting peer dependency: bootstrap@4.6.2
+npm error node_modules/bootstrap
+npm error   peer bootstrap@"^4.5.0" from react-bootstrap-slider@3.0.0
+npm error   node_modules/react-bootstrap-slider
+npm error     react-bootstrap-slider@"^3.0.0" from the root project
+npm error
+npm error Fix the upstream dependency conflict, or retry
+npm error this command with --force or --legacy-peer-deps
+npm error to accept an incorrect (and potentially broken) dependency resolution.
+npm error
+npm error
+npm error For a full report see:
+npm error C:\Users\LENOVO\AppData\Local\npm-cache\_logs\2024-06-02T20_29_42_597Z-eresolve-report.txt
+
+npm error A complete log of this run can be found in: C:\Users\LENOVO\AppData\Local\npm-cache\_logs\2024-06-02T20_29_42_597Z-debug-0.log 
+
+Nguyen nhân : như trên
+
+4. Lỗi 
+PS D:\projects\ReactTurotial\react-form-builder-app> npm install react-select        
+npm error code ERESOLVE
+npm error ERESOLVE could not resolve
+npm error
+npm error While resolving: react-bootstrap-slider@3.0.0
+npm error Found: bootstrap@5.3.3
+npm error node_modules/bootstrap
+npm error   bootstrap@"^5.3.3" from the root project
+npm error
+npm error Could not resolve dependency:
+npm error peer bootstrap@"^4.5.0" from react-bootstrap-slider@3.0.0
+npm error node_modules/react-bootstrap-slider
+npm error   react-bootstrap-slider@"^3.0.0" from the root project
+npm error
+npm error Conflicting peer dependency: bootstrap@4.6.2
+npm error node_modules/bootstrap
+npm error   peer bootstrap@"^4.5.0" from react-bootstrap-slider@3.0.0
+npm error   node_modules/react-bootstrap-slider
+npm error     react-bootstrap-slider@"^3.0.0" from the root project
+npm error
+npm error Fix the upstream dependency conflict, or retry
+npm error this command with --force or --legacy-peer-deps
+npm error to accept an incorrect (and potentially broken) dependency resolution.
+npm error
+npm error
+npm error For a full report see:
+npm error C:\Users\LENOVO\AppData\Local\npm-cache\_logs\2024-06-02T20_31_03_540Z-eresolve-report.txt
+
+npm error A complete log of this run can be found in: C:\Users\LENOVO\AppData\Local\npm-cache\_logs\2024-06-02T20_31_03_540Z-debug-0.log
+
+Nguyen nhân : như trên
+
