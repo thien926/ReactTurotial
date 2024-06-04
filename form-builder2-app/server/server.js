@@ -21,7 +21,7 @@ app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'ejs');
 // app.engine('ejs', require('ejs').renderFile);
 
-app.set('port', (process.env.PORT || isProduction ? 8080 : 5005));
+app.set('port', (process.env.PORT || isProduction ? 3000 : 5005));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
