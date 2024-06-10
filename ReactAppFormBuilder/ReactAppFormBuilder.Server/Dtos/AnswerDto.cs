@@ -12,6 +12,6 @@ namespace ReactAppFormBuilder.Server.Dtos
 
         public JsonDocument answerData { get; set; }
 
-        public Boolean? defaulFlag { get; set; }
+        public Boolean? defaultFlag { get; set; }
     }
 }

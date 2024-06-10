@@ -9,7 +9,7 @@ import DemobarComponent from "./demobar-component";
 import "../assets/css/customformbuilder.css";
 import { ReactFormBuilder } from "react-form-builder2";
 import { useDispatch, useSelector } from "react-redux";
-import { getControlWithTemplateId, setTemplateId } from "../redux/actions/FormBuilderAction";
+import { getControlWithTemplateId, setControlsIntoStore, setTemplateId } from "../redux/actions/FormBuilderAction";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { IntlProvider } from "react-intl";
@@ -49,23 +49,11 @@ const FormBuilderPage = () => {
         const node = myRef.current;
     }, []);
 
-    const onChange = (data) => {
-        console.log(data);
+    const onPost = (data) => {
+        dispatch(setControlsIntoStore(data.task_data, false));
     }
 
     return (
-
-        // <div>
-        //     <DemobarComponent variables={variables} />
-        //     <ReactFormBuilder
-        //         variables={variables}
-        //         url={url}
-        //         saveUrl={saveUrl}
-        //         locale="en"
-        //         saveAlways={false}
-        //         data={initialFormData}
-        //     />
-        // </div>
 
         <div ref={myRef}>
             <DemobarComponent variables={variables} answerUrl={answerUrl} templateId={FormBuilderReducer.templateId} />
@@ -79,18 +67,18 @@ const FormBuilderPage = () => {
                                 url={url}
                                 saveUrl={saveUrl}
                                 locale="en"
-                                saveAlways={false}
+                                saveAlways={true}
                                 data={FormBuilderReducer.data}
-                            // onChange={onChange}
+                                onPost={onPost}
                             />) : <ReactFormBuilder
                                 key={nanoid()}
                                 variables={variables}
                                 url={url}
                                 saveUrl={saveUrl}
                                 locale="en"
-                                saveAlways={false}
+                                saveAlways={true}
                                 data={[]}
-                            // onChange={onChange}
+                                onPost={onPost}
                             />
                     }
                 </IntlProvider>

@@ -1,4 +1,4 @@
-import { GET_ANSWER_DEFAULT, GET_CONTROLS_WITH_TEMPLATE_ID, SET_TEMPLATE_ID } from "../actions/FormBuilderAction";
+import { GET_ANSWER_DEFAULT, GET_CONTROLS_WITH_TEMPLATE_ID, SAVE_CONTROLS_TEMPLATE, SAVE_CONTROL_STATUS, SET_ANSWERS_INTO_STORE, SET_CONTROLS_INTO_STORE, SET_TEMPLATE_ID } from "../actions/FormBuilderAction";
 
 const initialState = {
     data: [],
@@ -6,7 +6,8 @@ const initialState = {
     lastItem: null,
     answer: [],
     templateId: '',
-    errorMessage : ''
+    errorMessage: '',
+    saveControlStatus: true,
 }
 
 const FormBuilderReducer = (state = initialState, action) => {
@@ -26,6 +27,29 @@ const FormBuilderReducer = (state = initialState, action) => {
                 ...state,
                 answer: action.payload
             };
+        case SET_CONTROLS_INTO_STORE:
+            return {
+                ...state,
+                data: action.payload.data,
+                saveControlStatus: action.payload.saveControlStatus
+            }
+        case SAVE_CONTROLS_TEMPLATE:
+            return {
+                ...state,
+                data: action.payload.data,
+                templateId: action.payload.templateId,
+                saveControlStatus: action.payload.saveControlStatus
+            }
+        case SAVE_CONTROL_STATUS:
+            return {
+                ...state,
+                saveControlStatus: action.payload
+            }
+        case SET_ANSWERS_INTO_STORE:
+            return {
+                ...state,
+                answer: action.payload
+            }
         default:
             return {
                 ...state

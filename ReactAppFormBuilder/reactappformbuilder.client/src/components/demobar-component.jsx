@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ReactFormGenerator } from 'react-form-builder2';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAnswerDefault } from '../redux/actions/FormBuilderAction';
+import { getAnswerDefault, saveAnswersTemplate, saveControlsTemplate, setAnswersIntoStore } from '../redux/actions/FormBuilderAction';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -57,6 +57,14 @@ const DemobarComponent = (props) => {
     };
 
     const _onSubmit = (data) => {
+        if (FormBuilderReducer.saveControlStatus !== true) {
+            alert("Form has not been saved");
+        } else {
+            const post = async() => dispatch(saveAnswersTemplate(FormBuilderReducer.templateId, data));
+            post();
+            alert("Update success");
+        }
+        console.log(data);
         // const currentUrl = window.location.href;
         // const lastSegment = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
 
@@ -87,7 +95,7 @@ const DemobarComponent = (props) => {
     };
 
     const saveFormData = () => {
-        // store.dispatch('post');
+        dispatch(saveControlsTemplate(FormBuilderReducer.templateId, FormBuilderReducer.data));
     };
 
     let modalClass = 'modal';
@@ -103,6 +111,10 @@ const DemobarComponent = (props) => {
     let roModalClass = 'modal ro-modal';
     if (roPreviewVisible) {
         roModalClass += ' show d-block';
+    }
+
+    const onChange = (data) => {
+        dispatch(setAnswersIntoStore(data));
     }
 
     return (
@@ -128,6 +140,7 @@ const DemobarComponent = (props) => {
                                 onSubmit={_onSubmit}
                                 variables={variables}
                                 data={data}
+                                onChange={onChange}
                                 locale='en' />
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-default" data-dismiss="modal" onClick={closePreview}>Close</button>
@@ -153,6 +166,7 @@ const DemobarComponent = (props) => {
                                 variables={variables}
                                 hide_actions={true}
                                 data={data}
+                                onChange={onChange}
                                 locale='en' />
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-default" data-dismiss="modal" onClick={closePreview}>Close</button>
@@ -176,6 +190,7 @@ const DemobarComponent = (props) => {
                                 display_short={true}
                                 variables={variables}
                                 hide_actions={false}
+                                onChange={onChange}
                                 locale='en' />
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-default" data-dismiss="modal" onClick={closePreview}>Close</button>
@@ -184,6 +199,7 @@ const DemobarComponent = (props) => {
                     </div>
                 </div>
             }
+
         </div>
     );
 };
