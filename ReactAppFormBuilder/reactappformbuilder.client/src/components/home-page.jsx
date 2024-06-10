@@ -1,8 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
 import TemplateItem from "./template-item-component";
-import { getAllTemplate } from "../redux/actions/TemplateAction";
+import templateStore from '../stores/TemplateStore';
 
 const headers = {
     Accept: 'application/json',
@@ -13,15 +12,24 @@ const headers = {
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const HomePage = () => {
-    const TemplateReducer = useSelector(state => state.TemplateReducer)
-    const [template, setTemplate] = useState([]);
+    const [template, setTemplate] = useState(templateStore.state.data);
     const [answer, setAnswer] = useState([]);
 
-    const dispatch = useDispatch();
+    useEffect(() => {
+        const unsubscribe = templateStore.subscribe((state) => {
+            setTemplate(state.data);
+        });
+
+        templateStore.dispatch("getAllTemplate");
+
+        // return () => {
+        //     unsubscribe();
+        // };
+    }, [])
 
     useEffect(() => {
-        dispatch(getAllTemplate());
-    }, [dispatch])
+        setTemplate(templateStore.state.data);
+    },[templateStore.state.data])
     
 
     // useEffect(() => {
@@ -59,8 +67,8 @@ const HomePage = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {TemplateReducer.data.length > 0 ? (
-                            TemplateReducer.data.map((item, index) => (
+                        {template.length > 0 ? (
+                            template.map((item, index) => (
                                 <TemplateItem key={index} item={item} index={index} />
                             ))
                         ) : (

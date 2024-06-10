@@ -12,7 +12,7 @@ const headers = {
 };
 
 const DemobarComponent = (props) => {
-    const FormBuilderReducer = useSelector(state => state.FormBuilderReducer)
+    // const FormBuilderReducer = useSelector(state => state.FormBuilderReducer)
     // eslint-disable-next-line react/prop-types
     const { variables, answerUrl, templateId } = props;
     const [data, setData] = useState([]);
@@ -21,20 +21,20 @@ const DemobarComponent = (props) => {
     const [roPreviewVisible, setRoPreviewVisible] = useState(false);
     const [answer, setAnswer] = useState([]);
 
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
 
-    useEffect(() => {
-        dispatch(getAnswerDefault(templateId));
-    }, [dispatch, templateId]);
+    // useEffect(() => {
+    //     dispatch(getAnswerDefault(templateId));
+    // }, [dispatch, templateId]);
 
-    useEffect(() => {
-        setAnswer(FormBuilderReducer.answer);
-    }, [FormBuilderReducer.answer])
+    // useEffect(() => {
+    //     setAnswer(FormBuilderReducer.answer);
+    // }, [FormBuilderReducer.answer])
 
-    useEffect(() => {
-        setData(FormBuilderReducer.data);
-    }, [FormBuilderReducer.data])
+    // useEffect(() => {
+    //     setData(FormBuilderReducer.data);
+    // }, [FormBuilderReducer.data])
 
     const showPreview = () => {
         setPreviewVisible(true);

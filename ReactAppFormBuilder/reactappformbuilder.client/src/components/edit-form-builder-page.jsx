@@ -8,8 +8,8 @@ import DemobarComponent from "./demobar-component";
 // Add our stylesheets for the demo.
 import "../assets/css/customformbuilder.css";
 import { ReactFormBuilder } from "react-form-builder2";
-import { useDispatch, useSelector } from "react-redux";
-import { getControlWithTemplateId, setTemplateId } from "../redux/actions/FormBuilderAction";
+import formBuilderStore from '../stores/FormBuilderStore'
+
 
 const apiUrl = import.meta.env.VITE_API_URL;
 // const url = `${apiUrl}/Template/GetControls`;
@@ -19,25 +19,59 @@ const initialFormData = [{ "id": "6b7b17fa-8182-41f2-9104-1086c22e9d97", "elemen
 
 
 const FormBuilderPage = () => {
-    const FormBuilderReducer = useSelector(state => state.FormBuilderReducer) 
-
+    const [data, setData] = useState(formBuilderStore.state.data);
+    const [templateId, setTemplateId] = useState(formBuilderStore.state.templateId)
     const [url, setUrl] = useState('');
     const [saveUrl, setSaveUrl] = useState(`${apiUrl}/Template/UpdateControlWithTemplateId/`);
     const [answerUrl, setAnswerUrl] = useState('');
-    const location = useLocation();
+    // const location = useLocation();
 
-    const dispatch = useDispatch();
+    // useEffect(() => {
+    //     let Id = parseInt(location.pathname.replace("/form-builder/", ""));
+    //     if (!isNaN(Id)) {
+    //         // setUrl(`${apiUrl}/Template/GetControl/${Id}`);
+    //         // setSaveUrl(`${apiUrl}/Template/UpdateControlWithTemplateId/${Id}`);
+    //         // setAnswerUrl(`${apiUrl}/Answer/GetAnswerDefault/${Id}`);
+    //         dispatch(setTemplateId(Id));
+    //         dispatch(getControlWithTemplateId(Id));
+    //     }
+    // }, [location, dispatch])
+
+    // useEffect(() => {
+    //     let Id = parseInt(location.pathname.replace("/form-builder/", ""));
+    //     if (!isNaN(Id)) {
+    //         const unsubscribe = formBuilderStore.subscribe((state) => {
+    //             setData(state.data);
+    //             setTemplateId(state.templateId);
+    //         });
+            
+    //         formBuilderStore.dispatch("setTemplateId", Id);
+    //         formBuilderStore.dispatch("getControlWithTemplateId", Id);
+    
+    //         // return () => {
+    //         //     unsubscribe();
+    //         // };
+    //     }
+    // },[location])
 
     useEffect(() => {
-        let Id = parseInt(location.pathname.replace("/form-builder/", ""));
+        let url = window.location.href;
+        let lastSlashIndex = url.lastIndexOf("/");
+        let lastPart = url.substring(lastSlashIndex + 1);
+        let Id = parseInt(lastPart);
         if (!isNaN(Id)) {
-            // setUrl(`${apiUrl}/Template/GetControl/${Id}`);
-            // setSaveUrl(`${apiUrl}/Template/UpdateControlWithTemplateId/${Id}`);
-            // setAnswerUrl(`${apiUrl}/Answer/GetAnswerDefault/${Id}`);
-            dispatch(setTemplateId(Id));
-            dispatch(getControlWithTemplateId(Id));
+            const unsubscribe = formBuilderStore.subscribe((state) => {
+                setData(state.data);
+                setTemplateId(state.templateId);
+            });
+            
+            formBuilderStore.dispatch("setTemplateId", Id);
+            formBuilderStore.dispatch("getControlWithTemplateId", Id);
+            // return () => {
+            //     unsubscribe();
+            // };
         }
-    }, [location, dispatch])
+    },[])
 
     const onChange = (data) => {
         console.log(data);
@@ -54,13 +88,14 @@ const FormBuilderPage = () => {
                 locale="en"
                 saveAlways={false}
                 data={initialFormData}
+                show_description={true} 
             />
         </div>
 
         // <>
-        //     <DemobarComponent variables={variables} answerUrl={answerUrl} templateId={FormBuilderReducer.templateId}/>
+        //     <DemobarComponent variables={variables} answerUrl={answerUrl} templateId={formBuilderStore.state.templateId}/>
         //     {
-        //         FormBuilderReducer.data.length > 0 ?
+        //         formBuilderStore.state.data.length > 0 ?
         //             (<ReactFormBuilder
         //                 key={1}
         //                 variables={variables}
@@ -68,7 +103,7 @@ const FormBuilderPage = () => {
         //                 saveUrl={saveUrl}
         //                 locale="en"
         //                 saveAlways={false}
-        //                 data={FormBuilderReducer.data}
+        //                 data={formBuilderStore.state.data}
         //                 // onChange={onChange}
         //             />) : <ReactFormBuilder
         //                 key={2}
