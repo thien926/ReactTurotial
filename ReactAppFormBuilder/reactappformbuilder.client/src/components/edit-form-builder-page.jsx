@@ -9,6 +9,10 @@ import DemobarComponent from "./demobar-component";
 import "../assets/css/customformbuilder.css";
 import { ReactFormBuilder } from "react-form-builder2";
 import formBuilderStore from '../stores/FormBuilderStore'
+import { DndProvider } from "react-dnd";
+import { IntlProvider } from "react-intl";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { nanoid } from 'nanoid';
 
 
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -81,7 +85,9 @@ const FormBuilderPage = () => {
         
         <div>
             <DemobarComponent variables={variables} />
+            <DndProvider backend={HTML5Backend}> <IntlProvider>
             <ReactFormBuilder
+                key={nanoid()}
                 variables={variables}
                 url={url}
                 saveUrl={saveUrl}
@@ -90,6 +96,8 @@ const FormBuilderPage = () => {
                 data={initialFormData}
                 show_description={true} 
             />
+            </IntlProvider>
+            </DndProvider>
         </div>
 
         // <>
