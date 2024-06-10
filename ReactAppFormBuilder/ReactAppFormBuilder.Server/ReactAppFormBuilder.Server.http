@@ -1,0 +1,6 @@
+@ReactAppFormBuilder.Server_HostAddress = http://localhost:5230
+
+GET {{ReactAppFormBuilder.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
