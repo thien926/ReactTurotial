@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 // eslint-disable-next-line no-unused-vars
 import * as variables from "../variables";
 import { useLocation } from 'react-router';
@@ -10,6 +10,10 @@ import "../assets/css/customformbuilder.css";
 import { ReactFormBuilder } from "react-form-builder2";
 import { useDispatch, useSelector } from "react-redux";
 import { getControlWithTemplateId, setTemplateId } from "../redux/actions/FormBuilderAction";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { IntlProvider } from "react-intl";
+import { nanoid } from "nanoid";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 // const url = `${apiUrl}/Template/GetControls`;
@@ -17,14 +21,16 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 const initialFormData = [{ "id": "6b7b17fa-8182-41f2-9104-1086c22e9d97", "element": "Header", "text": "Welcome to the form", "static": true, "required": false, "bold": false, "italic": false, "content": "Header content" }, { "id": "6b7b17fa-8182-41f2-9104-1086c22e9d98", "element": "TextInput", "label": "Name", "required": true }, { "id": "6b7b17fa-8182-41f2-9104-1086c22e9d99", "element": "TextInput", "label": "Email", "required": true }];
 
+const locale = 'en';
 
 const FormBuilderPage = () => {
-    const FormBuilderReducer = useSelector(state => state.FormBuilderReducer) 
+    const FormBuilderReducer = useSelector(state => state.FormBuilderReducer)
 
     const [url, setUrl] = useState('');
     const [saveUrl, setSaveUrl] = useState(`${apiUrl}/Template/UpdateControlWithTemplateId/`);
     const [answerUrl, setAnswerUrl] = useState('');
     const location = useLocation();
+    const myRef = useRef(null);
 
     const dispatch = useDispatch();
 
@@ -39,49 +45,57 @@ const FormBuilderPage = () => {
         }
     }, [location, dispatch])
 
+    useEffect(() => {
+        const node = myRef.current;
+    }, []);
+
     const onChange = (data) => {
         console.log(data);
     }
 
     return (
-        
-        <div>
-            <DemobarComponent variables={variables} />
-            <ReactFormBuilder
-                variables={variables}
-                url={url}
-                saveUrl={saveUrl}
-                locale="en"
-                saveAlways={false}
-                data={initialFormData}
-            />
-        </div>
 
-        // <>
-        //     <DemobarComponent variables={variables} answerUrl={answerUrl} templateId={FormBuilderReducer.templateId}/>
-        //     {
-        //         FormBuilderReducer.data.length > 0 ?
-        //             (<ReactFormBuilder
-        //                 key={1}
-        //                 variables={variables}
-        //                 url={url}
-        //                 saveUrl={saveUrl}
-        //                 locale="en"
-        //                 saveAlways={false}
-        //                 data={FormBuilderReducer.data}
-        //                 // onChange={onChange}
-        //             />) : <ReactFormBuilder
-        //                 key={2}
-        //                 variables={variables}
-        //                 url={url}
-        //                 saveUrl={saveUrl}
-        //                 locale="en"
-        //                 saveAlways={false}
-        //                 data={[]}
-        //                 // onChange={onChange}
-        //             />
-        //     }
-        // </>
+        // <div>
+        //     <DemobarComponent variables={variables} />
+        //     <ReactFormBuilder
+        //         variables={variables}
+        //         url={url}
+        //         saveUrl={saveUrl}
+        //         locale="en"
+        //         saveAlways={false}
+        //         data={initialFormData}
+        //     />
+        // </div>
+
+        <div ref={myRef}>
+            <DemobarComponent variables={variables} answerUrl={answerUrl} templateId={FormBuilderReducer.templateId} />
+            <DndProvider backend={HTML5Backend}>
+                <IntlProvider locale={locale}>
+                    {
+                        FormBuilderReducer.data.length > 0 ?
+                            (<ReactFormBuilder
+                                key={nanoid()}
+                                variables={variables}
+                                url={url}
+                                saveUrl={saveUrl}
+                                locale="en"
+                                saveAlways={false}
+                                data={FormBuilderReducer.data}
+                            // onChange={onChange}
+                            />) : <ReactFormBuilder
+                                key={nanoid()}
+                                variables={variables}
+                                url={url}
+                                saveUrl={saveUrl}
+                                locale="en"
+                                saveAlways={false}
+                                data={[]}
+                            // onChange={onChange}
+                            />
+                    }
+                </IntlProvider>
+            </DndProvider>
+        </div>
 
     );
 };
