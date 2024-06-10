@@ -20,7 +20,7 @@ var app = builder.Build();
 
 app.UseCors(builder =>
 {
-    builder.WithOrigins("https://localhost:5173")
+    builder.WithOrigins("https://localhost:5173", "https://127.0.0.1:5173")
            .AllowAnyHeader()
            .AllowAnyMethod()
            .AllowCredentials();

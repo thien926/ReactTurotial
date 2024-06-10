@@ -19,7 +19,7 @@ const initialFormData = [{ "id": "6b7b17fa-8182-41f2-9104-1086c22e9d97", "elemen
 
 
 const FormBuilderPage = () => {
-    const FormBuilderReducer = useSelector(state => state.FormBuilderReducer)
+    const FormBuilderReducer = useSelector(state => state.FormBuilderReducer) 
 
     const [url, setUrl] = useState('');
     const [saveUrl, setSaveUrl] = useState(`${apiUrl}/Template/UpdateControlWithTemplateId/`);
@@ -44,41 +44,44 @@ const FormBuilderPage = () => {
     }
 
     return (
-        <>
-            <DemobarComponent variables={variables} answerUrl={answerUrl} templateId={FormBuilderReducer.templateId}/>
-            {
-                FormBuilderReducer.data.length > 0 ?
-                    (<ReactFormBuilder
-                        variables={variables}
-                        url={url}
-                        saveUrl={saveUrl}
-                        locale="en"
-                        saveAlways={false}
-                        data={FormBuilderReducer.data}
-                        // onChange={onChange}
-                    />) : <ReactFormBuilder
-                        variables={variables}
-                        url={url}
-                        saveUrl={saveUrl}
-                        locale="en"
-                        saveAlways={false}
-                        data={[]}
-                        // onChange={onChange}
-                    />
-            }
+        
+        <div>
+            <DemobarComponent variables={variables} />
+            <ReactFormBuilder
+                variables={variables}
+                url={url}
+                saveUrl={saveUrl}
+                locale="en"
+                saveAlways={false}
+                data={initialFormData}
+            />
+        </div>
 
-        </>
-        // <div>
-        //     <DemobarComponent variables={variables} />
-        //     <ReactFormBuilder
-        //         variables={variables}
-        //         url={url}
-        //         saveUrl={saveUrl}
-        //         locale="en"
-        //         saveAlways={false}
-        //         data={initialFormData}
-        //     />
-        // </div>
+        // <>
+        //     <DemobarComponent variables={variables} answerUrl={answerUrl} templateId={FormBuilderReducer.templateId}/>
+        //     {
+        //         FormBuilderReducer.data.length > 0 ?
+        //             (<ReactFormBuilder
+        //                 key={1}
+        //                 variables={variables}
+        //                 url={url}
+        //                 saveUrl={saveUrl}
+        //                 locale="en"
+        //                 saveAlways={false}
+        //                 data={FormBuilderReducer.data}
+        //                 // onChange={onChange}
+        //             />) : <ReactFormBuilder
+        //                 key={2}
+        //                 variables={variables}
+        //                 url={url}
+        //                 saveUrl={saveUrl}
+        //                 locale="en"
+        //                 saveAlways={false}
+        //                 data={[]}
+        //                 // onChange={onChange}
+        //             />
+        //     }
+        // </>
 
     );
 };
