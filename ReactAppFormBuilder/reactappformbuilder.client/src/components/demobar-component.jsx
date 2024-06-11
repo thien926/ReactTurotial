@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ReactFormGenerator } from 'react-form-builder2';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAnswerDefault } from '../redux/actions/FormBuilderAction';
+import { getAnswerDefault, saveAnswersTemplate, saveControlsTemplate, setAnswersIntoStore } from '../redux/actions/FormBuilderAction';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -14,8 +14,8 @@ const headers = {
 const DemobarComponent = (props) => {
     const FormBuilderReducer = useSelector(state => state.FormBuilderReducer)
     // eslint-disable-next-line react/prop-types
-    const { variables, answerUrl, templateId } = props;
-    const [data, setData] = useState([]);
+    const { variables, templateId } = props;
+    const [taskData, setTaskData] = useState([]);
     const [previewVisible, setPreviewVisible] = useState(false);
     const [shortPreviewVisible, setShortPreviewVisible] = useState(false);
     const [roPreviewVisible, setRoPreviewVisible] = useState(false);
@@ -33,19 +33,22 @@ const DemobarComponent = (props) => {
     }, [FormBuilderReducer.answer])
 
     useEffect(() => {
-        setData(FormBuilderReducer.data);
-    }, [FormBuilderReducer.data])
+        setTaskData(FormBuilderReducer.taskData);
+    }, [FormBuilderReducer.taskData])
 
     const showPreview = () => {
+        props.onLoadTaskData();
         setPreviewVisible(true);
     };
 
     const showShortPreview = () => {
+        props.onLoadTaskData();
         saveFormData();
         setShortPreviewVisible(true);
     };
 
     const showRoPreview = () => {
+        props.onLoadTaskData();
         saveFormData();
         setRoPreviewVisible(true);
     };
@@ -57,6 +60,14 @@ const DemobarComponent = (props) => {
     };
 
     const _onSubmit = (data) => {
+        if (FormBuilderReducer.saveControlStatus !== true) {
+            alert("Form has not been saved");
+        } else {
+            const post = async() => dispatch(saveAnswersTemplate(FormBuilderReducer.templateId, data));
+            post();
+            alert("Update success");
+        }
+        console.log(data);
         // const currentUrl = window.location.href;
         // const lastSegment = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
 
@@ -86,9 +97,9 @@ const DemobarComponent = (props) => {
         // }
     };
 
-    const saveFormData = () => {
-        // store.dispatch('post');
-    };
+    // const saveFormData = () => {
+    //     dispatch(saveControlsTemplate(FormBuilderReducer.templateId, FormBuilderReducer.taskData));
+    // };
 
     let modalClass = 'modal';
     if (previewVisible) {
@@ -105,13 +116,17 @@ const DemobarComponent = (props) => {
         roModalClass += ' show d-block';
     }
 
+    const onChange = (data) => {
+        dispatch(setAnswersIntoStore(data));
+    }
+
     return (
         <div className="clearfix" style={{ margin: '10px', width: '70%' }}>
             <h4 className="float-left">Preview</h4>
             <button className="btn btn-primary float-right" style={{ marginRight: '10px' }} onClick={showPreview}>Preview Form</button>
             <button className="btn btn-default float-right" style={{ marginRight: '10px' }} onClick={showShortPreview}>Alternate/Short Form</button>
             <button className="btn btn-default float-right" style={{ marginRight: '10px' }} onClick={showRoPreview}>Read Only Form</button>
-            <button className="btn btn-default float-right" style={{ marginRight: '10px' }} onClick={saveFormData}>Save Form</button>
+            <button className="btn btn-default float-right" style={{ marginRight: '10px' }} onClick={() => props.saveFormData()}>Save Form</button>
 
             {previewVisible &&
                 <div className={modalClass} role="dialog">
@@ -123,11 +138,11 @@ const DemobarComponent = (props) => {
                                 // back_name="Back"
                                 answer_data={answer}
                                 action_name="Save"
-                                form_action={answerUrl}
                                 form_method="POST"
                                 onSubmit={_onSubmit}
                                 variables={variables}
-                                data={data}
+                                data={taskData}
+                                onChange={onChange}
                                 locale='en' />
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-default" data-dismiss="modal" onClick={closePreview}>Close</button>
@@ -152,7 +167,8 @@ const DemobarComponent = (props) => {
                                 read_only={true}
                                 variables={variables}
                                 hide_actions={true}
-                                data={data}
+                                data={taskData}
+                                onChange={onChange}
                                 locale='en' />
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-default" data-dismiss="modal" onClick={closePreview}>Close</button>
@@ -172,10 +188,11 @@ const DemobarComponent = (props) => {
                                 answer_data={answer}
                                 form_action="/"
                                 form_method="POST"
-                                data={data}
+                                data={taskData}
                                 display_short={true}
                                 variables={variables}
                                 hide_actions={false}
+                                onChange={onChange}
                                 locale='en' />
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-default" data-dismiss="modal" onClick={closePreview}>Close</button>
@@ -184,6 +201,7 @@ const DemobarComponent = (props) => {
                     </div>
                 </div>
             }
+
         </div>
     );
 };

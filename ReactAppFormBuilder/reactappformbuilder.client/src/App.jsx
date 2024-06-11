@@ -6,7 +6,6 @@ import AnswerPage from './components/edit-asnwer-page';
 
 
 function App() {
-
     return (
         <Routes>
           <Route path="/" exact element={<Navigate to="/home" />} />

@@ -132,13 +132,18 @@ namespace ReactAppFormBuilder.Server.Controllers
                                               .FirstOrDefaultAsync(c => c.templateId == templateId && c.defaultFlag == true);
             if (answer == null)
             {
-                answer = _mapper.Map<Answer>(answerUpdate);
+                answer = new Answer();
                 answer.templateId = templateId;
                 answer.defaultFlag = true;
                 answer.username = "admin";
+                answer.answerData = answerUpdate.answerData;
+                _context.Answers.Add(answer);
             }
-            answer.answerData = answerUpdate.answerData;
-            _context.Answers.Update(answer);
+            else
+            {
+                answer.answerData = answerUpdate.answerData;
+                _context.Answers.Update(answer);
+            }
             _context.SaveChanges();
             return Ok();
         }

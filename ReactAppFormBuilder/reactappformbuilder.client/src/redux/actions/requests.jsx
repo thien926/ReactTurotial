@@ -6,21 +6,33 @@ const headers = {
   OPTIONS: '',
 };
 
+// export function post(url, data) {
+//   return fetch(url, {
+//     method: 'POST',
+//     headers,
+//     body: JSON.stringify(data),
+//   }).then(response => response);
+// }
+
 export function post(url, data) {
-  return fetch(url, {
-    method: 'POST',
-    headers,
-    body: JSON.stringify(data),
-  }).then(response => response);
+  return axios.post(
+    url,
+    data,
+    {
+      header: headers,
+      withCredentials: true,
+      credentials: 'include'
+    }
+  );
 }
 
 export function get(url) {
   return axios.get(
     url,
     {
-        header : headers,
-        withCredentials : true,
-        credentials : 'include'
+      header: headers,
+      withCredentials: true,
+      credentials: 'include'
     }
   );
 }

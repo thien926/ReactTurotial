@@ -1,17 +1,21 @@
-import { get } from "./requests"
+import { get, post } from "./requests"
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export const GET_CONTROLS_WITH_TEMPLATE_ID = 'GET_CONTROLS_WITH_TEMPLATE_ID'
 export const SET_TEMPLATE_ID = 'SET_TEMPLATE_ID'
 export const GET_ANSWER_DEFAULT = 'GET_ANSWER_DEFAULT'
+export const SET_CONTROLS_INTO_STORE = 'SET_CONTROLS_INTO_STORE'
+export const SET_ANSWERS_INTO_STORE = 'SET_ANSWERS_INTO_STORE'
+export const SAVE_CONTROLS_TEMPLATE = 'SAVE_CONTROLS_TEMPLATE'
+export const SAVE_CONTROL_STATUS = 'SAVE_CONTROL_STATUS'
 
 export const getControlWithTemplateId = (templateId) => (dispatch) => {
     templateId = parseInt(templateId);
-    if(isNaN(templateId)) {
+    if (isNaN(templateId)) {
         dispatch({
-            type : GET_CONTROLS_WITH_TEMPLATE_ID,
-            payload : []
+            type: GET_CONTROLS_WITH_TEMPLATE_ID,
+            payload: []
         })
     } else {
         get(`${apiUrl}/Controls/GetControlsWithTemplateId/${templateId}`).then(res => {
@@ -23,8 +27,8 @@ export const getControlWithTemplateId = (templateId) => (dispatch) => {
                 };
             });
             dispatch({
-                type : GET_CONTROLS_WITH_TEMPLATE_ID,
-                payload : res.data
+                type: GET_CONTROLS_WITH_TEMPLATE_ID,
+                payload: res.data
             })
         })
     }
@@ -32,16 +36,16 @@ export const getControlWithTemplateId = (templateId) => (dispatch) => {
 
 export const getAnswerDefault = (templateId) => (dispatch) => {
     templateId = parseInt(templateId);
-    if(isNaN(templateId)) {
+    if (isNaN(templateId)) {
         dispatch({
-            type : GET_ANSWER_DEFAULT,
-            payload : []
+            type: GET_ANSWER_DEFAULT,
+            payload: []
         })
     } else {
         get(`${apiUrl}/Answers/GetAnswerDefault/${templateId}`).then(res => {
             dispatch({
-                type : GET_ANSWER_DEFAULT,
-                payload : res.data
+                type: GET_ANSWER_DEFAULT,
+                payload: res.data.answerData
             })
         })
     }
@@ -49,7 +53,66 @@ export const getAnswerDefault = (templateId) => (dispatch) => {
 
 export const setTemplateId = (templateId) => (dispatch) => {
     dispatch({
-        type : SET_TEMPLATE_ID,
-        payload : templateId
+        type: SET_TEMPLATE_ID,
+        payload: templateId
+    })
+}
+
+export const setControlsIntoStore = (data, status) => (dispatch) => {
+    dispatch({
+        type: SET_CONTROLS_INTO_STORE,
+        payload: {
+            data : data,
+            saveControlStatus : status
+        }
+    })
+}
+
+export const saveControlsTemplate = (templateId, data) => (dispatch) => {
+    let newData = data.map(item => {
+        return {
+            templateId: item.templateId,
+            fieldNo: item.fieldNo,
+            taskData: {
+                ...item,
+                template: null
+            }
+        };
+    });
+    post(`${apiUrl}/Templates/UpdateOrUpdateTemplate/${templateId}`, newData).then(res => {
+        dispatch({
+            type: SAVE_CONTROLS_TEMPLATE,
+            payload: {
+                templateId: templateId,
+                data: data,
+                saveControlStatus : true
+            }
+        })
+    })
+}
+
+export const saveAnswersTemplate = (templateId, data) => (dispatch) => {
+    post(`${apiUrl}/Answers/UpdateAnswerDefaultWithTemplateId/${templateId}`, {
+        templateId: templateId,
+        answerData: data
+    }).then(res => {
+        dispatch({
+            type: SET_ANSWERS_INTO_STORE,
+            payload: data
+        })
+    })
+}
+
+export const saveControlStatus = (status) => (dispatch) => {
+    dispatch({
+        type: SAVE_CONTROL_STATUS,
+        payload: status
+    })
+}
+
+export const setAnswersIntoStore = (data) => (dispatch) => {
+    dispatch({
+        type: SET_ANSWERS_INTO_STORE,
+        payload: data
     })
 }
