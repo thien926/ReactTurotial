@@ -1,19 +1,21 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Provider } from 'react-redux';
 import * as serviceWorker from "./serviceWorker"
 import Store from './redux/Store';
+// eslint-disable-next-line react/no-deprecated
+import { render } from 'react-dom';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  // <React.StrictMode>
+render(
+  <React.StrictMode>
     <Provider store={Store} >
-      <Router>
-        <App />
-      </Router>
+    <Router>
+    <App />
+    </Router>
     </Provider>
-  // </React.StrictMode>,
+  </React.StrictMode>,
+  document.getElementById("root")
 )
 
 serviceWorker.unregister();
