@@ -6,7 +6,6 @@ import AnswerPage from './components/edit-asnwer-page';
 
 
 function App() {
-
     return (
         <Routes>
           <Route path="/" exact element={<Navigate to="/home" />} />
@@ -15,7 +14,6 @@ function App() {
             <Route path='/form-builder/:Id' element={<FormBuilderPage />} />
             <Route path="/answer/:Id" element={<AnswerPage />} />
         </Routes>
-        
       );
 }
 

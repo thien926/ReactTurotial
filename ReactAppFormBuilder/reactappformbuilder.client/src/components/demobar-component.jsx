@@ -14,8 +14,8 @@ const headers = {
 const DemobarComponent = (props) => {
     const FormBuilderReducer = useSelector(state => state.FormBuilderReducer)
     // eslint-disable-next-line react/prop-types
-    const { variables, answerUrl, templateId } = props;
-    const [data, setData] = useState([]);
+    const { variables, templateId } = props;
+    const [taskData, setTaskData] = useState([]);
     const [previewVisible, setPreviewVisible] = useState(false);
     const [shortPreviewVisible, setShortPreviewVisible] = useState(false);
     const [roPreviewVisible, setRoPreviewVisible] = useState(false);
@@ -33,19 +33,22 @@ const DemobarComponent = (props) => {
     }, [FormBuilderReducer.answer])
 
     useEffect(() => {
-        setData(FormBuilderReducer.data);
-    }, [FormBuilderReducer.data])
+        setTaskData(FormBuilderReducer.taskData);
+    }, [FormBuilderReducer.taskData])
 
     const showPreview = () => {
+        props.onLoadTaskData();
         setPreviewVisible(true);
     };
 
     const showShortPreview = () => {
+        props.onLoadTaskData();
         saveFormData();
         setShortPreviewVisible(true);
     };
 
     const showRoPreview = () => {
+        props.onLoadTaskData();
         saveFormData();
         setRoPreviewVisible(true);
     };
@@ -94,9 +97,9 @@ const DemobarComponent = (props) => {
         // }
     };
 
-    const saveFormData = () => {
-        dispatch(saveControlsTemplate(FormBuilderReducer.templateId, FormBuilderReducer.data));
-    };
+    // const saveFormData = () => {
+    //     dispatch(saveControlsTemplate(FormBuilderReducer.templateId, FormBuilderReducer.taskData));
+    // };
 
     let modalClass = 'modal';
     if (previewVisible) {
@@ -123,7 +126,7 @@ const DemobarComponent = (props) => {
             <button className="btn btn-primary float-right" style={{ marginRight: '10px' }} onClick={showPreview}>Preview Form</button>
             <button className="btn btn-default float-right" style={{ marginRight: '10px' }} onClick={showShortPreview}>Alternate/Short Form</button>
             <button className="btn btn-default float-right" style={{ marginRight: '10px' }} onClick={showRoPreview}>Read Only Form</button>
-            <button className="btn btn-default float-right" style={{ marginRight: '10px' }} onClick={saveFormData}>Save Form</button>
+            <button className="btn btn-default float-right" style={{ marginRight: '10px' }} onClick={() => props.saveFormData()}>Save Form</button>
 
             {previewVisible &&
                 <div className={modalClass} role="dialog">
@@ -135,11 +138,10 @@ const DemobarComponent = (props) => {
                                 // back_name="Back"
                                 answer_data={answer}
                                 action_name="Save"
-                                form_action={answerUrl}
                                 form_method="POST"
                                 onSubmit={_onSubmit}
                                 variables={variables}
-                                data={data}
+                                data={taskData}
                                 onChange={onChange}
                                 locale='en' />
                             <div className="modal-footer">
@@ -165,7 +167,7 @@ const DemobarComponent = (props) => {
                                 read_only={true}
                                 variables={variables}
                                 hide_actions={true}
-                                data={data}
+                                data={taskData}
                                 onChange={onChange}
                                 locale='en' />
                             <div className="modal-footer">
@@ -186,7 +188,7 @@ const DemobarComponent = (props) => {
                                 answer_data={answer}
                                 form_action="/"
                                 form_method="POST"
-                                data={data}
+                                data={taskData}
                                 display_short={true}
                                 variables={variables}
                                 hide_actions={false}

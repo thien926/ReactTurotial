@@ -1,5 +1,14 @@
 {
   "name": "reactappformbuilder.client",
+  "keywords": [
+    "react",
+    "react-component",
+    "form",
+    "builder",
+    "ui",
+    "drag",
+    "drop"
+  ],
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -15,6 +24,7 @@
     "jquery": "^3.7.1",
     "lodash": "^4.17.21",
     "nanoid": "^5.0.7",
+    "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",

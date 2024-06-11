@@ -141,7 +141,6 @@ namespace ReactAppFormBuilder.Server.Controllers
             }
             else
             {
-                answer = _mapper.Map<Answer>(answerUpdate);
                 answer.answerData = answerUpdate.answerData;
                 _context.Answers.Update(answer);
             }

@@ -1,7 +1,7 @@
 import { GET_ANSWER_DEFAULT, GET_CONTROLS_WITH_TEMPLATE_ID, SAVE_CONTROLS_TEMPLATE, SAVE_CONTROL_STATUS, SET_ANSWERS_INTO_STORE, SET_CONTROLS_INTO_STORE, SET_TEMPLATE_ID } from "../actions/FormBuilderAction";
 
 const initialState = {
-    data: [],
+    taskData: [],
     saveAlways: true,
     lastItem: null,
     answer: [],
@@ -15,7 +15,7 @@ const FormBuilderReducer = (state = initialState, action) => {
         case GET_CONTROLS_WITH_TEMPLATE_ID:
             return {
                 ...state,
-                data: action.payload
+                taskData: action.payload
             };
         case SET_TEMPLATE_ID:
             return {
@@ -30,13 +30,13 @@ const FormBuilderReducer = (state = initialState, action) => {
         case SET_CONTROLS_INTO_STORE:
             return {
                 ...state,
-                data: action.payload.data,
+                taskData: action.payload.data,
                 saveControlStatus: action.payload.saveControlStatus
             }
         case SAVE_CONTROLS_TEMPLATE:
             return {
                 ...state,
-                data: action.payload.data,
+                taskData: action.payload.data,
                 templateId: action.payload.templateId,
                 saveControlStatus: action.payload.saveControlStatus
             }

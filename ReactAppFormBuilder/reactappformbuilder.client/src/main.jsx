@@ -7,13 +7,13 @@ import * as serviceWorker from "./serviceWorker"
 import Store from './redux/Store';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Provider store={Store} >
       <Router>
         <App />
       </Router>
     </Provider>
-  </React.StrictMode>,
+  // </React.StrictMode>,
 )
 
 serviceWorker.unregister();
